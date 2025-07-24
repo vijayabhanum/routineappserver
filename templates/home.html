@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Home {% endblock %}
+{% block css %}
+<link rel="stylesheet" href=
+"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+
+<style>
+    label {
+        margin-left: 20px;
+    }
+    #datepicker {
+        width:180px;
+    }
+
+</style>
+
+{% endblock %}
+
+{% block body %}
+
+<br><br><br>
+
+<div class="container">
+<div class="row">
+
+<div class="col">
+
+<div class="card bg-dark text-light" style="width: 22rem;height:18rem;">
+  <div class="card-body">
+    <h5 class="card-title">Get Report for a day...</h5>
+    <br>
+    <p class="card-text">Get a detailed report for a picked date.</p>
+    <br>
+    <label for="date" style="padding-bottom:0.5rem;padding-left:0rem;">Pick Date:</label>
+    <div class="input-group">
+            <input type="text" id="datepicker" class="form-control" name="date">
+            <span class="input-group-text">&#128197;</span>
+    </div>
+    <br>
+    <a href="#" id="day_report_button" class="card-link btn btn-dark">Get day report</a>
+
+  </div>
+</div>
+
+</div>
+
+<div class="col">
+
+<div class="card bg-dark text-light" style="width: 22rem;height:18rem;">
+  <div class="card-body">
+    <h5 class="card-title">Submit Details</h5>
+    <br>
+    <p class="card-text">Submit details for present day and missing days.</p>
+    <br>
+    {% for i in dates %}
+    <a href="{% url 'report_input_page' day=i.day month=i.month year=i.year %}" class="btn btn-dark">{{i.month}}-{{i.day}}-{{i.year}}</a>
+    {% endfor %}
+  </div>
+</div>
+
+</div>
+
+<div class="col">
+
+<div class="card bg-dark text-light" style="width: 22rem;height:18rem;">
+  <div class="card-body">
+    <h5 class="card-title">Advanced Report</h5>
+    <br><br>
+    <p class="card-text">Get weekly, monthly, yearly report.</p>
+    <br>
+    <a href="{% url 'graph_page' %}" class="card-link btn btn-dark">Go to adv options</a>
+  </div>
+</div>
+</div>
+</div>
+
+<br><br>
+
+<div class=" card row d-flex justify-content-center">
+  <div class="col card-body">
+    <p style="white-space: pre-wrap;background-color:rgba(239, 222, 147, 0.868)" class="p-3">{{ detail_text }}</p>
+  </div>
+</div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script>
+  document.getElementById('day_report_button').addEventListener('click', function(){
+
+    var date = document.getElementById('datepicker').value;
+    console.log(date.length);
+    if(date.length == 0){
+      console.log("value is null");
+    }else{
+    console.log(date);
+    window.location.href = "{% url 'day_report_page' date='placeholder' %}".replace('placeholder', date);
+    };
+  });
+</script>
+<script src="{% static 'home.js' %}"></script>
+
+{% endblock %}

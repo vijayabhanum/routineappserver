@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Graph {% endblock %}
+
+{% block css %}   {% endblock %}
+
+{% block body %}
+
+<br><br>
+
+<div class="container">
+    <div class="row">
+        <div class="col-4">
+            <div class="card" style="height: 25rem;background-color:rgb(127, 208, 208)">
+            <div class="card-body">
+            <form action="">
+                {% csrf_token %}
+                <label class="form-label">Year</label>
+                <select class="form-select" id="year">
+                  {% for year in years %}
+                  <option value={{year}}>{{year}}</option>
+                  {% endfor %}
+                </select>
+                
+<br>
+                <label class="form-label">Month</label>
+                <select class="form-select" id="month">
+                  {% for month in months %}
+                  <option value={{month}}>{{month}}</option>
+                  {% endfor %}
+                </select>
+<br>
+                <label class="form-label">Type</label>
+                <select class="form-select" id="type">
+                  {% for routine in routines %}
+                  {% if routine != "Total" %}
+                  <option value={{routine}}>Routine {{routine}}</option>
+                  {% else %}
+                  <option value={{routine}}>{{routine}}</option>
+                  {% endif %}
+                  {% endfor %}
+                </select>
+<br><br>
+                <button class="btn btn-dark" style="width: 100%;" id="submit">Submit</button>
+
+            </form>
+            </div>
+            </div>
+
+        </div>
+        <div class="col-8">
+            
+            <img src="" alt="" id="graph_image" style="width: 40rem;height:25rem;border-radius:0.5rem;" class="d-none">
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'graph.js' %}"></script>
+{% endblock %}

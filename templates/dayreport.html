@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Day Report{% endblock %}
+
+{% block body %}
+<br><br>
+{% if total_report %}
+
+
+        <h4 style="padding-left: 2rem;font-weight:700;color:white">{{total_report.date}}</h4>
+
+
+
+<br>
+
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            <div class="row">
+        {% if routine_report %}
+        {% for r in routine_report %}
+        <div class="col">
+            <div class="card" style="width: 10rem; margin-top:0.5rem;margin-bottom:0.5rem">
+              <div class="card-body">
+                <h6 class="card-title">Routine {{r.routine.number}}</h6>
+                <h4 class="'card-title"><span style="font-weight: bold;color:blue;">{{r.rtotal}}</span>/{{r.total_marks}}</h4>
+              </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+            </div>
+        </div>
+
+        <div class="col-4">
+
+            
+
+            {% if total_report.passorfail == True %}
+            <div class="card" style="width: 18rem;background-color:rgb(144, 231, 13); color:rgb(113, 0, 53);">
+            {% else %}
+            <div class="card" style="width: 18rem;background-color:rgb(255, 22, 22); color:rgb(255, 233, 32);">
+            {% endif %}
+
+            <div class="card-body">
+                <h5 class="card-title">Total Score</h5>
+                <p>pass marks : {{ total_report.pass_border }}</p>
+                <h2 class="card-title"><span style="font-size:3rem;font-weight: bolder;">{{total_report.total}}</span>/100</h2>
+            </div>
+            </div>
+            
+            <br>
+
+            <div class="card" style="width: 18rem;background-color:rgb(237, 240, 252)">
+                <div class="card-body">
+                    <h6>{{total_report.comment}}</h6>
+                </div>
+            </div>
+            </div>
+        </div>
+</div>
+
+{% else %}
+
+<h3>There is no report for this day !!</h3>
+
+{% endif %}
+
+
+
+{% endblock %}
+
