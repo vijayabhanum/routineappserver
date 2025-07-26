@@ -159,3 +159,45 @@ MEDIA_ROOT = env('MEDIA_ROOT')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/'
+
+
+
+### adding logguing configuration
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG', # You can change this to 'DEBUG' for more verbose logging
+            'class': 'logging.FileHandler',
+            'filename': '/var/log/django/rouapp.log', # Create this directory and file, ensure permissions
+            'formatter': 'verbose',
+        },
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'], # You might want to remove 'console' in production
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'routine_app': { # Replace 'rouapp' with your actual Django app's name
+            'handlers': ['file', 'console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+    },
+    'root': {
+        'handlers': ['file'],
+        'level': 'INFO',
+    },
+}
+
